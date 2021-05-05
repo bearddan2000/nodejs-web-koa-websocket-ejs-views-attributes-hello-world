@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Nodejs home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+  </head>
+  <body>
+    <!-- this is header -->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Nodejs</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+      <h2>Socket IO Click Me</h2>
+      <button type="button" class="btn btn-primary">Click Me</button>
+      <h3>Got announcement</h3>
+      <p>
+        <h4>Message</h4>
+        <p id="message"></p>
+      </p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+        $(document).ready(function(){
+          var socket = io.connect('/');
+          socket.on('clickResponse', function(data) {
+              $('#message').text(data.message);
+          });
+          $("button").click(function(){
+            socket.emit('clickRequest', { message: $('#message').text() });
+          });
+        });
+      </script>
+  </body>
+</html>
